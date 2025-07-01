@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flip Book Birthday Invitation</title>
-    <link rel="stylesheet"
-        href="styles.css" />
-    <head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap">
     <style>
         body {
             margin: 0;
             padding: 20px;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Baloo 2', cursive;
             background: linear-gradient(45deg, #FF6B9D, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7);
             background-size: 400% 400%;
             animation: gradientShift 8s ease infinite;
@@ -20,6 +18,7 @@
             justify-content: center;
             align-items: center;
             perspective: 1000px;
+            overflow-x: hidden;
         }
 
         @keyframes gradientShift {
@@ -33,6 +32,11 @@
             width: 400px;
             height: 600px;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .card-container:hover {
+            transform: translateY(-5px);
         }
 
         .card {
@@ -109,6 +113,13 @@
             position: absolute;
             font-size: 40px;
             animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .animal-friend:hover {
+            transform: scale(1.3) rotate(20deg);
+            animation: none;
         }
 
         .animal-friend:nth-child(1) {
@@ -188,6 +199,12 @@
             box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
             width: 100%;
             max-width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .party-info:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.4);
         }
 
         .info-line {
@@ -200,6 +217,7 @@
         .highlight {
             color: #8A2BE2;
             font-size: 18px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
         }
 
         .rsvp-section {
@@ -211,6 +229,12 @@
             font-size: 14px;
             font-weight: bold;
             animation: rainbow 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .rsvp-section:hover {
+            transform: scale(1.05);
         }
 
         @keyframes rainbow {
@@ -223,6 +247,12 @@
             position: absolute;
             font-size: 25px;
             animation: dance 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        .party-animals:hover {
+            animation: none;
+            transform: scale(1.5) rotate(15deg);
         }
 
         .party-animals:nth-child(1) { top: 20px; left: 20px; animation-delay: 0s; }
@@ -302,6 +332,80 @@
             0%, 100% { transform: translateX(-50%) translateY(0px); }
             50% { transform: translateX(-50%) translateY(-5px); }
         }
+
+        /* Music controls */
+        .music-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .music-controls:hover {
+            transform: scale(1.1);
+        }
+
+        .music-icon {
+            font-size: 24px;
+        }
+
+        /* Interactive balloons */
+        .balloon {
+            position: absolute;
+            width: 60px;
+            height: 80px;
+            border-radius: 50%;
+            animation: float-up 8s ease-in infinite;
+            cursor: pointer;
+            z-index: -1;
+        }
+
+        .balloon:before {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 2px;
+            height: 40px;
+            background: rgba(0,0,0,0.2);
+            transform: translateX(-50%);
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        /* Enhanced confetti burst */
+        .confetti-burst {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Celebration effect */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -327,11 +431,11 @@
                 <div class="front-title">🎉 You're Invited! 🎉</div>
                 
                 <div class="animals-circle">
-                    <div class="animal-friend">🐻</div>
-                    <div class="animal-friend">🐰</div>
-                    <div class="animal-friend">🦊</div>
-                    <div class="animal-friend">🐼</div>
-                    <div class="animal-friend">🐨</div>
+                    <div class="animal-friend" onclick="animalClick(event)">🐻</div>
+                    <div class="animal-friend" onclick="animalClick(event)">🐰</div>
+                    <div class="animal-friend" onclick="animalClick(event)">🦊</div>
+                    <div class="animal-friend" onclick="animalClick(event)">🐼</div>
+                    <div class="animal-friend" onclick="animalClick(event)">🐨</div>
                 </div>
                 
                 <div class="flip-hint">Click to flip and see party details!</div>
@@ -339,24 +443,22 @@
             
             <!-- Back Side -->
             <div class="card-face card-back">
-                <div class="party-animals">🎪</div>
-                <div class="party-animals">🎭</div>
-                <div class="party-animals">🎨</div>
-                <div class="party-animals">🎵</div>
+                <div class="party-animals" onclick="partyAnimalClick(event)">🎪</div>
+                <div class="party-animals" onclick="partyAnimalClick(event)">🎭</div>
+                <div class="party-animals" onclick="partyAnimalClick(event)">🎨</div>
+                <div class="party-animals" onclick="partyAnimalClick(event)">🎵</div>
                 
-                <div class="back-title">🎂 Party Time! 🎂</div>
+                <div class="back-title">🎂 Party Time! �</div>
                 
                 <div class="party-info">
                     <div class="info-line">🌟 <span class="highlight">Dimas Saputra</span> is turning <span class="highlight">9</span>!</div>
                     <div class="info-line">📅 Date: <span class="highlight">17 July 2025</span></div>
                     <div class="info-line">🕐 Time: <span class="highlight">16:00</span></div>
                     <div class="info-line">📍 Location: <span class="highlight">Bakmi GM Mall Taman Anggrek</span></div>
-                    
                 </div>
                 
-                <div class="rsvp-section">
-                    🎉 Can't wait to celebrate with you!🎉
-                    
+                <div class="rsvp-section" onclick="showCelebration()">
+                    🎉 Can't wait to celebrate with you! 🎉
                 </div>
             </div>
         </div>
@@ -366,8 +468,25 @@
         </div>
     </div>
 
+    <!-- Music controls -->
+    <div class="music-controls" onclick="toggleMusic()">
+        <div class="music-icon">🎵</div>
+    </div>
+
+    <!-- Celebration effect -->
+    <div class="celebration" id="celebration"></div>
+
+    <!-- Audio element -->
+    <audio id="birthdayAudio" loop>
+        <source src="https://www.dropbox.com/scl/fi/198j3nls1kvl0104l70ul/happy-birthday.mp3?rlkey=8lb5v70pqnojhb2fgxe13oufl&raw=1" type="audio/mpeg">
+
     <script>
         let isFlipped = false;
+        let audio = document.getElementById('birthdayAudio');
+        let isMusicPlaying = false;
+        
+        // Start with muted audio (autoplay policies require this)
+        audio.volume = 0.5;
         
         function flipCard() {
             const card = document.getElementById('birthdayCard');
@@ -382,20 +501,36 @@
                 instruction.innerHTML = '👆 Click anywhere to flip the invitation! 👆';
                 isFlipped = false;
             }
+            
+            createSparkleBurst();
         }
         
-        // Add some extra sparkle effects on flip
-        document.querySelector('.card-container').addEventListener('click', function() {
-            // Create temporary sparkle burst effect
-            const container = this;
-            for (let i = 0; i < 6; i++) {
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                audio.pause();
+                document.querySelector('.music-icon').textContent = '🔇';
+            } else {
+                audio.play().then(() => {
+                    document.querySelector('.music-icon').textContent = '🎵';
+                }).catch(error => {
+                    console.log("Audio playback failed:", error);
+                    // Show a message to the user that they need to interact first
+                    alert("Please click somewhere on the page first to enable music!");
+                });
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+        
+        function createSparkleBurst() {
+            const container = document.querySelector('.card-container');
+            for (let i = 0; i < 10; i++) {
                 setTimeout(() => {
                     const sparkle = document.createElement('div');
-                    sparkle.innerHTML = '✨';
+                    sparkle.innerHTML = ['✨', '⭐', '🎈', '🎉', '🎊'][Math.floor(Math.random() * 5)];
                     sparkle.style.position = 'absolute';
                     sparkle.style.left = Math.random() * 100 + '%';
                     sparkle.style.top = Math.random() * 100 + '%';
-                    sparkle.style.fontSize = '20px';
+                    sparkle.style.fontSize = (20 + Math.random() * 15) + 'px';
                     sparkle.style.animation = 'sparkle 1s ease-out forwards';
                     sparkle.style.pointerEvents = 'none';
                     sparkle.style.zIndex = '1000';
@@ -404,11 +539,155 @@
                     setTimeout(() => sparkle.remove(), 1000);
                 }, i * 100);
             }
+        }
+        
+        function animalClick(event) {
+            event.stopPropagation();
+            const animal = event.target;
+            animal.style.animation = 'none';
+            animal.style.transform = 'scale(1.5) rotate(20deg)';
+            
+            // Create mini celebration
+            createMiniCelebration(animal);
+            
+            setTimeout(() => {
+                animal.style.animation = 'float 3s ease-in-out infinite';
+                animal.style.transform = '';
+            }, 1000);
+        }
+        
+        function partyAnimalClick(event) {
+            event.stopPropagation();
+            const animal = event.target;
+            animal.style.animation = 'none';
+            animal.style.transform = 'scale(1.8) rotate(15deg)';
+            
+            // Create mini celebration
+            createMiniCelebration(animal);
+            
+            setTimeout(() => {
+                animal.style.animation = 'dance 2s ease-in-out infinite';
+                animal.style.transform = '';
+            }, 1000);
+        }
+        
+        function createMiniCelebration(element) {
+            const rect = element.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const spark = document.createElement('div');
+                    spark.innerHTML = ['✨', '⭐'][Math.floor(Math.random() * 2)];
+                    spark.style.position = 'fixed';
+                    spark.style.left = x + 'px';
+                    spark.style.top = y + 'px';
+                    spark.style.fontSize = '20px';
+                    spark.style.transform = 'translate(-50%, -50%)';
+                    spark.style.animation = `sparkle-fly ${1 + Math.random()}s ease-out forwards`;
+                    spark.style.zIndex = '1000';
+                    document.body.appendChild(spark);
+                    
+                    // Random direction
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 50 + Math.random() * 100;
+                    
+                    spark.style.setProperty('--end-x', (Math.cos(angle) * distance) + 'px');
+                    spark.style.setProperty('--end-y', (Math.sin(angle) * distance) + 'px');
+                    
+                    setTimeout(() => spark.remove(), 1000);
+                }, i * 100);
+            }
+        }
+        
+        function showCelebration() {
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'block';
+            
+            // Create lots of confetti
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.width = (5 + Math.random() * 10) + 'px';
+                confetti.style.height = (5 + Math.random() * 10) + 'px';
+                confetti.style.position = 'fixed';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animation = `confetti-fall ${2 + Math.random() * 3}s linear forwards`;
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                celebration.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }
+            
+            setTimeout(() => {
+                celebration.style.display = 'none';
+                celebration.innerHTML = '';
+            }, 3000);
+        }
+        
+        // Create floating balloons in the background
+        function createBalloons() {
+            const colors = ['#FF6B9D', '#4ECDC4', '#FFD700', '#96CEB4', '#DDA0DD', '#FFA07A'];
+            
+            for (let i = 0; i < 8; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.animationDelay = Math.random() * 5 + 's';
+                balloon.style.animationDuration = 8 + Math.random() * 7 + 's';
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.opacity = 0.7;
+                
+                balloon.addEventListener('click', function() {
+                    this.style.animation = 'balloon-pop 0.5s ease-out forwards';
+                    setTimeout(() => this.remove(), 500);
+                    createMiniCelebration(this);
+                });
+                
+                document.body.appendChild(balloon);
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createBalloons();
+            
+            // Add a style for the confetti animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes sparkle-fly {
+                    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                    100% { transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(0); opacity: 0; }
+                }
+                
+                @keyframes confetti-fall {
+                    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                }
+                
+                @keyframes balloon-pop {
+                    0% { transform: scale(1); opacity: 0.7; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(0); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Enable music after first interaction
+            document.body.addEventListener('click', function enableMusic() {
+    if (!isMusicPlaying) {
+        audio.play().then(() => {
+            isMusicPlaying = true;
+            document.querySelector('.music-icon').textContent = '🎵';
+        });
+    }
+    document.body.removeEventListener('click', enableMusic);
+}, { once: true });
         });
     </script>
-    <audio autoplay loop>
-  <source src="happy-birthday.mp3" type="audio/mpeg" />
-  Your browser does not support the audio element.
-</audio>
 </body>
 </html>
