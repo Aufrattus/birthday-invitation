@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flip Book Birthday Invitation</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet"
+        href="styles.css" />
+    <head>
     <style>
-        /* ...[unchanged CSS code from previous version]... */
         body {
             margin: 0;
             padding: 20px;
@@ -20,7 +21,287 @@
             align-items: center;
             perspective: 1000px;
         }
-        /* ...[rest of CSS as before]... */
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card-container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            cursor: pointer;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #FFE4E1, #E0F6FF, #F0FFF0, #FFF8DC);
+            background-size: 400% 400%;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #F0E68C, #FFB6C1, #DDA0DD, #98FB98);
+            background-size: 400% 400%;
+            animation: gradientShift 6s ease infinite reverse;
+            transform: rotateY(180deg);
+        }
+
+        .front-title {
+            font-size: 42px;
+            font-weight: bold;
+            color: #FF6B9D;
+            text-shadow: 3px 3px 0px #FFE4E1, 6px 6px 0px #FF1493;
+            margin-bottom: 30px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        .animals-circle {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 20px 0;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animal-friend {
+            position: absolute;
+            font-size: 40px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animal-friend:nth-child(1) {
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 0s;
+        }
+
+        .animal-friend:nth-child(2) {
+            top: 25%;
+            right: 0;
+            transform: translate(50%, -50%);
+            animation-delay: 0.5s;
+        }
+
+        .animal-friend:nth-child(3) {
+            bottom: 0;
+            right: 25%;
+            transform: translate(50%, 50%);
+            animation-delay: 1s;
+        }
+
+        .animal-friend:nth-child(4) {
+            bottom: 0;
+            left: 25%;
+            transform: translate(-50%, 50%);
+            animation-delay: 1.5s;
+        }
+
+        .animal-friend:nth-child(5) {
+            top: 25%;
+            left: 0;
+            transform: translate(-50%, -50%);
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+        }
+
+        .flip-hint {
+            font-size: 18px;
+            color: #FF6B9D;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .back-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #8A2BE2;
+            text-shadow: 2px 2px 0px #DDA0DD, 4px 4px 0px #9370DB;
+            margin-bottom: 25px;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
+        }
+
+        .party-info {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 3px dashed #8A2BE2;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .info-line {
+            font-size: 16px;
+            color: #333;
+            margin: 8px 0;
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: #8A2BE2;
+            font-size: 18px;
+        }
+
+        .rsvp-section {
+            background: #FFD700;
+            color: #333;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: rainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0%, 100% { background: #FFD700; }
+            33% { background: #FF6B9D; color: white; }
+            66% { background: #4ECDC4; }
+        }
+
+        .party-animals {
+            position: absolute;
+            font-size: 25px;
+            animation: dance 2s ease-in-out infinite;
+        }
+
+        .party-animals:nth-child(1) { top: 20px; left: 20px; animation-delay: 0s; }
+        .party-animals:nth-child(2) { top: 20px; right: 20px; animation-delay: 0.3s; }
+        .party-animals:nth-child(3) { bottom: 20px; left: 20px; animation-delay: 0.6s; }
+        .party-animals:nth-child(4) { bottom: 20px; right: 20px; animation-delay: 0.9s; }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            75% { transform: rotate(10deg) scale(1.1); }
+        }
+
+        .sparkles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            color: #FFD700;
+            font-size: 15px;
+            animation: sparkle 2s linear infinite;
+        }
+
+        .sparkle:nth-child(1) { top: 15%; left: 15%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 25%; right: 20%; animation-delay: 0.5s; }
+        .sparkle:nth-child(3) { bottom: 30%; left: 25%; animation-delay: 1s; }
+        .sparkle:nth-child(4) { bottom: 15%; right: 15%; animation-delay: 1.5s; }
+        .sparkle:nth-child(5) { top: 50%; left: 10%; animation-delay: 2s; }
+        .sparkle:nth-child(6) { top: 40%; right: 10%; animation-delay: 2.5s; }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: confetti-fall 4s linear infinite;
+        }
+
+        .confetti-piece:nth-child(1) { left: 10%; background: #FF6B9D; animation-delay: 0s; }
+        .confetti-piece:nth-child(2) { left: 30%; background: #4ECDC4; animation-delay: 0.8s; }
+        .confetti-piece:nth-child(3) { left: 50%; background: #FFD700; animation-delay: 1.6s; }
+        .confetti-piece:nth-child(4) { left: 70%; background: #96CEB4; animation-delay: 2.4s; }
+        .confetti-piece:nth-child(5) { left: 90%; background: #DDA0DD; animation-delay: 3.2s; }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(700px) rotate(720deg); opacity: 0; }
+        }
+
+        .flip-instruction {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: bounce-instruction 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce-instruction {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
     </style>
 </head>
 <body>
@@ -36,12 +317,15 @@
                     <div class="sparkle">✨</div>
                     <div class="sparkle">⭐</div>
                 </div>
+                
                 <div class="confetti-piece"></div>
                 <div class="confetti-piece"></div>
                 <div class="confetti-piece"></div>
                 <div class="confetti-piece"></div>
                 <div class="confetti-piece"></div>
+                
                 <div class="front-title">🎉 You're Invited! 🎉</div>
+                
                 <div class="animals-circle">
                     <div class="animal-friend">🐻</div>
                     <div class="animal-friend">🐰</div>
@@ -49,37 +333,46 @@
                     <div class="animal-friend">🐼</div>
                     <div class="animal-friend">🐨</div>
                 </div>
+                
                 <div class="flip-hint">Click to flip and see party details!</div>
             </div>
+            
             <!-- Back Side -->
             <div class="card-face card-back">
                 <div class="party-animals">🎪</div>
                 <div class="party-animals">🎭</div>
                 <div class="party-animals">🎨</div>
                 <div class="party-animals">🎵</div>
+                
                 <div class="back-title">🎂 Party Time! 🎂</div>
+                
                 <div class="party-info">
                     <div class="info-line">🌟 <span class="highlight">Dimas Saputra</span> is turning <span class="highlight">9</span>!</div>
                     <div class="info-line">📅 Date: <span class="highlight">17 July 2025</span></div>
                     <div class="info-line">🕐 Time: <span class="highlight">16:00</span></div>
                     <div class="info-line">📍 Location: <span class="highlight">Bakmi GM Mall Taman Anggrek</span></div>
+                    
                 </div>
+                
                 <div class="rsvp-section">
                     🎉 Can't wait to celebrate with you!🎉
+                    
                 </div>
             </div>
         </div>
+        
         <div class="flip-instruction">
             👆 Click anywhere to flip the invitation! 👆
         </div>
     </div>
+
     <script>
         let isFlipped = false;
-        let audioStarted = false;
-        const audio = document.getElementById('birthdayMusic');
+        
         function flipCard() {
             const card = document.getElementById('birthdayCard');
             const instruction = document.querySelector('.flip-instruction');
+            
             if (!isFlipped) {
                 card.classList.add('flipped');
                 instruction.innerHTML = '👆 Click to flip back to the cover! 👆';
@@ -89,21 +382,11 @@
                 instruction.innerHTML = '👆 Click anywhere to flip the invitation! 👆';
                 isFlipped = false;
             }
-            // Play music on first flip (fallback in case autoplay fails)
-            if (!audioStarted) {
-                audio.play().catch(()=>{});
-                audioStarted = true;
-            }
         }
-        // Try autoplay on load
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                audio.play().catch(()=>{});
-                audioStarted = true;
-            }, 200); // slight delay for DOM/audio readiness
-        });
+        
         // Add some extra sparkle effects on flip
         document.querySelector('.card-container').addEventListener('click', function() {
+            // Create temporary sparkle burst effect
             const container = this;
             for (let i = 0; i < 6; i++) {
                 setTimeout(() => {
@@ -117,14 +400,15 @@
                     sparkle.style.pointerEvents = 'none';
                     sparkle.style.zIndex = '1000';
                     container.appendChild(sparkle);
+                    
                     setTimeout(() => sparkle.remove(), 1000);
                 }, i * 100);
             }
         });
     </script>
-    <audio id="birthdayMusic" loop autoplay>
-        <source src="happy-birthday.mp3" type="audio/mpeg" />
-        Your browser does not support the audio element.
-    </audio>
+    <audio autoplay loop>
+  <source src="happy-birthday.mp3" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
 </body>
 </html>
