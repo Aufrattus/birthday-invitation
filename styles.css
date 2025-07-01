@@ -1,0 +1,19 @@
+/* === External CSS === */
+/* Move everything from <style> in your HTML here */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Comic Neue', cursive, sans-serif;
+    background: linear-gradient(45deg, #FF6B9D, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* ... paste the rest of your <style> section here unchanged ... */
